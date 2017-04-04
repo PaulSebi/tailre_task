@@ -106,6 +106,7 @@ var calcLeast = function(starttruck, count, dist, weight, totalcost){
                         {
                             if( p == 0 && q == 0 && r == 0)
                               continue;
+
                             valtab[starttruck-1][0][2] -= p;
                             valtab[starttruck-1][1][2] -= q;
                             valtab[starttruck-1][2][2] -= r;
@@ -127,5 +128,6 @@ var calcLeast = function(starttruck, count, dist, weight, totalcost){
 }
 
 app.use('/api', router);
-app.listen(port);
-console.log('Listening to '+port);
+app.listen(port,function(){
+    console.log('Listening to '+port);
+});
