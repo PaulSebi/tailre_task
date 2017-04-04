@@ -36,12 +36,12 @@ router.route('/findcost')
             totalItems+=valtab[i][j][2];
       n = totalItems;
       valtab_orig = valtab.slice(); //save a copy
-      calcLeast(1, 0, 0, 0, 0);
-      res.json({minimum_cost: leastCost});
+      calcLeast(1, 0, 0, 0, 0, ' ');
+      res.json({minimum_cost: leastCost, best_path: bestpath});
 
   });
 
-var valtab, distab, valtab_orig;
+var valtab, distab, valtab_orig, bestpath;
 var leastCost = 999, totalItems = 0, n;
 
 var initValues = function(){
@@ -58,21 +58,23 @@ var initValues = function(){
                                 ];
     leastCost = 999;
     totalItems = 0;
+    bestpath = "";
 
     return valtab;
 };
 
-var calcLeast = function(starttruck, count, dist, weight, totalcost){
-    var i, p, q, r;
+var calcLeast = function(starttruck, count, dist, weight, totalcost, path){
+    var i, p, q, r, tpath = '';
     var cost;
-
-    // console.log(starttruck + " " + count + " " + dist + " " + weight + " " + totalcost + " " + n);
+    
     cost = weight < 5 ? 10 * dist : (10 + Math.ceil((weight-5)/5)*8) * dist;
 
     if(count == totalItems){
         cost = cost + totalcost;
-        if(cost < leastCost)
+        if(cost < leastCost){
             leastCost = cost;
+            bestpath = path + ' L';
+          }
         return;
     }
     else if(n==0)
@@ -83,7 +85,7 @@ var calcLeast = function(starttruck, count, dist, weight, totalcost){
         {
               if(starttruck==0)       //if location and total items not arrived, trace back to another source
               {
-                    calcLeast(i, count + 0, distab[starttruck][i], weight * 0, totalcost + cost); //add 5 to weight to simulate return trip without any items
+                    calcLeast(i, count + 0, distab[starttruck][i], weight * 0, totalcost + cost, path + 'L - '); //add 5 to weight to simulate return trip without any items
               }
 
               else if(valtab[starttruck-1][0][2]==0 && valtab[starttruck-1][1][2]==0 && valtab[starttruck-1][2][2]==0)
@@ -103,8 +105,13 @@ var calcLeast = function(starttruck, count, dist, weight, totalcost){
                             valtab[starttruck-1][2][2] -= r;
                             n -= (p+q+r);
 
-                            calcLeast(i, count + p+q+r, distab[starttruck][i], weight + valtab[starttruck-1][0][1]*p + valtab[starttruck-1][1][1]*q + valtab[starttruck-1][2][1]*r, totalcost + cost);
+                            tpath += p? valtab[starttruck-1][0][0]:'';
+                            tpath += q? valtab[starttruck-1][1][0]:'';
+                            tpath += r? valtab[starttruck-1][2][0]:'';
 
+                            calcLeast(i, count + p+q+r, distab[starttruck][i], weight + valtab[starttruck-1][0][1]*p + valtab[starttruck-1][1][1]*q + valtab[starttruck-1][2][1]*r, totalcost + cost, path + tpath + ' - ');
+
+                            tpath = '';
                             n += (p+q+r);
 
                             valtab[starttruck-1][0][2] += p;
