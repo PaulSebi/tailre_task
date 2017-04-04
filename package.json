@@ -11,5 +11,9 @@
     "express" : ">1.0"
   },
   "author": "Paul Sebi",
-  "license": "ISC"
+  "license": "ISC",
+  "engines": {
+    "node": "4.2.6",
+    "npm": "3.5.2"
+  }
 }
