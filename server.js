@@ -5,7 +5,7 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 8090;
 var router = express.Router();
 
 router.use(function(req, res, next){
@@ -66,7 +66,6 @@ var initValues = function(){
 var calcLeast = function(starttruck, count, dist, weight, totalcost, path){
     var i, p, q, r, tpath = '';
     var cost;
-    
     cost = weight < 5 ? 10 * dist : (10 + Math.ceil((weight-5)/5)*8) * dist;
 
     if(count == totalItems){
@@ -126,6 +125,6 @@ var calcLeast = function(starttruck, count, dist, weight, totalcost, path){
 }
 
 app.use('/api', router);
-app.listen(process.env.PORT || 8080,function(){
+app.listen(port,function(){
     console.log('Listening to '+port);
 });
