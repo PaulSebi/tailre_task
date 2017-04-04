@@ -72,7 +72,7 @@ var calcLeast = function(starttruck, count, dist, weight, totalcost, path){
 
     if(count == totalItems){
         cost = cost + totalcost;
-
+        
         if(cost < leastCost){
             leastCost = cost;
             bestpath = path + ' L';
