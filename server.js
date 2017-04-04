@@ -36,6 +36,7 @@ router.route('/findcost')
             totalItems+=valtab[i][j][2];
       n = totalItems;
       valtab_orig = valtab.slice(); //save a copy
+
       for(i=3; i>0; i--)
         calcLeast(i, 0, 0, 0, 0, ' ');
       res.json({minimum_cost: leastCost, best_path: bestpath});
@@ -71,6 +72,7 @@ var calcLeast = function(starttruck, count, dist, weight, totalcost, path){
 
     if(count == totalItems){
         cost = cost + totalcost;
+
         if(cost < leastCost){
             leastCost = cost;
             bestpath = path + ' L';
