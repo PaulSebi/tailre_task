@@ -128,6 +128,6 @@ var calcLeast = function(starttruck, count, dist, weight, totalcost){
 }
 
 app.use('/api', router);
-app.listen(port,function(){
+app.listen(process.env.PORT || 8080,function(){
     console.log('Listening to '+port);
 });
