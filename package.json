@@ -1,0 +1,15 @@
+{
+  "name": "delivery_optimization",
+  "version": "1.0.0",
+  "description": "delivery optimization problem from tail.re",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies" : {
+    "express" : ">1.0"
+  },
+  "author": "Paul Sebi",
+  "license": "ISC"
+}
