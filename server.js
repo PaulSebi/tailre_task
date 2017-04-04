@@ -31,20 +31,13 @@ router.route('/findcost')
       valtab[2][1][2] = req.body.H!=null ? parseInt(req.body.H) : 0;
       valtab[2][2][2] = req.body.I!=null ? parseInt(req.body.I) : 0;
 
-      console.log(req.body.H);
-
       for(i=0; i<3; i++)
         for(j=0; j<3; j++)
             totalItems+=valtab[i][j][2];
       n = totalItems;
       valtab_orig = valtab.slice(); //save a copy
-      console.log(valtab);
-      console.log(totalItems);
       calcLeast(1, 0, 0, 0, 0);
-      console.log(leastCost);
-      console.log("Final Array\n");
-      console.log(valtab);
-      res.send(leastCost);
+      res.json({minimum_cost: leastCost});
 
   });
 
@@ -78,7 +71,6 @@ var calcLeast = function(starttruck, count, dist, weight, totalcost){
 
     if(count == totalItems){
         cost = cost + totalcost;
-            console.log("total reached" + cost);
         if(cost < leastCost)
             leastCost = cost;
         return;
@@ -99,7 +91,6 @@ var calcLeast = function(starttruck, count, dist, weight, totalcost){
 
               else                                                 //from each center, visit next node using every permutation of Stock
               {
-                  console.log('\nInside route loop' + i + valtab[starttruck-1][0][2] +'\n');
                   for(p=0; p<=valtab[starttruck-1][0][2]; p++)
                     for(q=0; q<=valtab[starttruck-1][1][2]; q++)
                         for(r=0; r<=valtab[starttruck-1][2][2]; r++)
