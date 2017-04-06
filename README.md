@@ -47,6 +47,7 @@ If using Postman,
         -   Enter Key-Value relationships from above table
 
 To see path as well, use the url  https://damp-headland-61595.herokuapp.com/api/costandpath with the same params.
+Here, the output will be in the format C# - L - C# - L. Where, products picked from one location will be grouped together.
 
 On the terminal you could also use the following curl code
 
