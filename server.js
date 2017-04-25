@@ -19,50 +19,13 @@ router.get('/', function(req, res){
 
 router.route('/findcost')
   .post(function(req, res){
-      var val = initValues();
-                                                      //init stock values
-      valtab[0][0][2] = req.body.A!=null ? parseInt(req.body.A) : 0;
-      valtab[0][1][2] = req.body.B!=null ? parseInt(req.body.B) : 0;
-      valtab[0][2][2] = req.body.C!=null ? parseInt(req.body.C) : 0;
-      valtab[1][0][2] = req.body.D!=null ? parseInt(req.body.D) : 0;
-      valtab[1][1][2] = req.body.E!=null ? parseInt(req.body.E) : 0;
-      valtab[1][2][2] = req.body.F!=null ? parseInt(req.body.F) : 0;
-      valtab[2][0][2] = req.body.G!=null ? parseInt(req.body.G) : 0;
-      valtab[2][1][2] = req.body.H!=null ? parseInt(req.body.H) : 0;
-      valtab[2][2][2] = req.body.I!=null ? parseInt(req.body.I) : 0;
-
-      for(i=0; i<3; i++)
-        for(j=0; j<3; j++)
-            totalItems+=valtab[i][j][2];
-      n = totalItems;
-
-      for(i=3; i>0; i--)
-        calcLeast(i, 0, 0, 0, 0, ' ');
+      initParams(req);
       res.json({minimum_cost: leastCost});
-
   });
 
   router.route('/costandpath')
     .post(function(req, res){
-        var val = initValues();
-                                                            //init stock values
-        valtab[0][0][2] = req.body.A!=null ? parseInt(req.body.A) : 0;
-        valtab[0][1][2] = req.body.B!=null ? parseInt(req.body.B) : 0;
-        valtab[0][2][2] = req.body.C!=null ? parseInt(req.body.C) : 0;
-        valtab[1][0][2] = req.body.D!=null ? parseInt(req.body.D) : 0;
-        valtab[1][1][2] = req.body.E!=null ? parseInt(req.body.E) : 0;
-        valtab[1][2][2] = req.body.F!=null ? parseInt(req.body.F) : 0;
-        valtab[2][0][2] = req.body.G!=null ? parseInt(req.body.G) : 0;
-        valtab[2][1][2] = req.body.H!=null ? parseInt(req.body.H) : 0;
-        valtab[2][2][2] = req.body.I!=null ? parseInt(req.body.I) : 0;
-
-        for(i=0; i<3; i++)
-          for(j=0; j<3; j++)
-              totalItems+=valtab[i][j][2];
-        n = totalItems;
-
-        for(i=3; i>0; i--)
-          calcLeast(i, 0, 0, 0, 0, ' ');
+        initParams(req);
         res.json({minimum_cost: leastCost, best_path: bestpath});
 
     });
@@ -70,6 +33,28 @@ router.route('/findcost')
 
 var valtab, distab,  bestpath;
 var leastCost, totalItems, n;
+
+var initParams = function(req){
+  var val = initValues();
+                                                    //init stock values
+  valtab[0][0][2] = req.body.A!=null ? parseInt(req.body.A) : 0;
+  valtab[0][1][2] = req.body.B!=null ? parseInt(req.body.B) : 0;
+  valtab[0][2][2] = req.body.C!=null ? parseInt(req.body.C) : 0;
+  valtab[1][0][2] = req.body.D!=null ? parseInt(req.body.D) : 0;
+  valtab[1][1][2] = req.body.E!=null ? parseInt(req.body.E) : 0;
+  valtab[1][2][2] = req.body.F!=null ? parseInt(req.body.F) : 0;
+  valtab[2][0][2] = req.body.G!=null ? parseInt(req.body.G) : 0;
+  valtab[2][1][2] = req.body.H!=null ? parseInt(req.body.H) : 0;
+  valtab[2][2][2] = req.body.I!=null ? parseInt(req.body.I) : 0;
+
+  for(i=0; i<3; i++)
+    for(j=0; j<3; j++)
+        totalItems+=valtab[i][j][2];
+  n = totalItems;
+
+  for(i=3; i>0; i--)
+    calcLeast(i, 0, 0, 0, 0, ' ');
+};
 
 var initValues = function(){
     valtab = [                                    //detail Center-Stock-Weight table
@@ -84,7 +69,7 @@ var initValues = function(){
               [2,   0,  3,   0]                     //  C3  2   0   3   0
                                 ];
     leastCost = 999;                                //so that first value is assumed to be leastCost
-    totalItems = 0;    
+    totalItems = 0;
     bestpath = "";
 
     return valtab;
